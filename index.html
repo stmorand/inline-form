@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Inline form elements</title>
+  <link rel="stylesheet" href="./scss/inline-form.css">
+  <link rel="stylesheet" href="./scss/inline-theme.css">
+</head>
+<body>
+<div class="container">
+  <form action="#" method="post">
+    <input type="hidden" id="anumber">
+    <input type="hidden" id="bnumber">
+    <input type="hidden" id="aselect">
+    <input type="hidden" id="atext">
+    Here is a text in which we want to include a number like <span class="inl-number" id="inl-anumber">22</span> in the middle of a <span class="inl-number" id="inl-bnumber">25</span> sentence.
+  </form>
+</div>
+
+
+
+<div class="overlay" id="inl-popup">
+  <button onclick="document.getElementById('inl-bnumber-update').focus()">TEST</button>
+  <a class="cancel" href="#" onclick="hideFormItem()"></a>
+  <div class="overlay__content" id="inl-popup-content">
+    something
+  </div>
+</div>
+
+
+<script type="application/javascript" src="js/functions.js"></script>
+<script type="application/javascript">
+  initInlineForm();
+</script>
+</body>
+</html>
