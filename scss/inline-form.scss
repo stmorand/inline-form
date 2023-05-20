@@ -62,7 +62,7 @@ body {
   left: 50%;
   background-color: white;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.2);
-  border-radius: 0;
+  border-radius: 8px;
   display: table;
   max-width: 260px;
   overflow: hidden;
@@ -77,9 +77,19 @@ body {
   padding-bottom: 4px;
   width: 100%;
 }
-
-
-
+.overlay__content ul {
+  padding: 0;
+}
+.overlay__content ul li a {
+  cursor: pointer;
+  font-weight: lighter;
+  display: block;
+  padding: 4px;
+  width: 100%;
+}
+.overlay__content ul li a:hover {
+  background-color: var(--main-color-a-5);
+}
 
 .overlay.show {
   opacity: 1;

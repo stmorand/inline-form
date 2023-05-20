@@ -1,0 +1,30 @@
+{
+  "aselect" : [
+    {
+      "name": "choix 1",
+      "text-fr": "ceci est le choix un",
+      "text-en": "this is the first choice"
+    },
+    {
+      "name": "choix 2",
+      "text-fr": "ceci est le choix 2",
+      "text-en": "this is the second choice"
+    },
+    {
+      "name": "choix 3",
+      "text-fr": "ceci est le choix 3",
+      "text-en": "this is the third choice"
+    }
+  ],
+  "bselect": [
+    {
+      "name": "choix 1",
+      "text-fr": "ceci est le choix un",
+      "text-en": "this is the first choice"
+    },
+    {
+      "name": "choix 2",
+      "text-fr": "ceci est le choix 2",
+      "text-en": "this is the second choice"
+    }]
+}
