@@ -3,23 +3,33 @@
   margin: 0;
   padding: 0;
 }
+::selection {
+  background: var(--main-color-a-8);
+  color: var(--main-color-a-1);
+  padding: 2px;
+}
 body {
-  background-color: lightgrey;
+  background-color: white;
   font-family: Helvetica, sans-serif;
 }
 
 .container {
   padding: 20px;
-  font-size:24px;
+  font-size:22px;
+  line-height: 30px;
 }
 
 .inl-number,
 .inl-text,
 .inl-select {
-  background-color: #EFEFEF;
-  border-radius: 4px;
+  border-bottom : 3px solid var(--main-color-a-5);
+  color: var(--main-color-a-1);
+  display: inline-block;
+  height: 28px;
   cursor:pointer;
-  padding: 4px;
+  min-width: 40px;
+  padding: 2px;
+  text-align: center;
 
 }
 
@@ -50,15 +60,22 @@ body {
   position: absolute;
   top: 44%;
   left: 50%;
-  width: calc(100% - 80px);
   background-color: white;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.2);
-  border-radius: 40px;
+  border-radius: 0;
   display: table;
+  max-width: 260px;
   overflow: hidden;
   opacity: 0;
   transform: translate(-50%, -50%) scale(.25);
   transition: all .2s .1s;
+  width: calc(100% - 80px);
+}
+.overlay__content label {
+  display: block;
+  text-align: center;
+  padding-bottom: 4px;
+  width: 100%;
 }
 
 
@@ -73,32 +90,52 @@ body {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
-
-
-
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
 input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number],
+input[type=text] {
   background-color: transparent;
   border: none;
+  color: var(--main-color-a-1);
   display: block;
-  font-size: 28px;
-  margin: 40px auto;
+  font-size: 32px;
+  margin: 20px auto 10px auto;
   text-align: center;
   text-decoration: underline;
   padding: 8px 2px;
   box-sizing: border-box;
-  width: 60%;
+  width: 80%;
 }
-input[type=number]:focus, select:focus  {
-  background-color: #F2C299;
-  //border: none;
-  //outline: none;
+input[type=text] {
+  max-width: 360px;
+}
+input[type=number] {
+  max-width: 240px;
+}
+input[type=number]:focus,
+input[type=text]:focus,
+select:focus  {
+  border: none;
+  outline: none;
 }
 
 
 
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+
+
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {}

@@ -14,14 +14,14 @@
     <input type="hidden" id="bnumber">
     <input type="hidden" id="aselect">
     <input type="hidden" id="atext">
-    Here is a text in which we want to include a number like <span class="inl-number" id="inl-anumber">22</span> in the middle of a <span class="inl-number" id="inl-bnumber">25</span> sentence.
+    Here is a text in which we want to include a number like <span class="inl-number" id="inl-anumber" title="mon contenu"></span> in the middle of a <span class="inl-number" id="inl-bnumber" title="mon contenu 2">25</span> sentence.
+    We can also add a text <span class="inl-text" id="inl-atext" title="mon contenu textuel"></span> in the middle of a sentence.
   </form>
 </div>
 
 
 
 <div class="overlay" id="inl-popup">
-  <button onclick="document.getElementById('inl-bnumber-update').focus()">TEST</button>
   <a class="cancel" href="#" onclick="hideFormItem()"></a>
   <div class="overlay__content" id="inl-popup-content">
     something

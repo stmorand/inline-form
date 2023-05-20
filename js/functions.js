@@ -1,5 +1,10 @@
 let currentFormItem = "";
 let currentFormType = "";
+let mousePos;
+window.addEventListener('mousemove', (event) => {
+    mousePos = { x: event.clientX, y: event.clientY };
+});
+
 function initInlineForm() {
 
     // Init all the number inputs
@@ -9,10 +14,21 @@ function initInlineForm() {
             event.preventDefault();
             showFormItem("number", event.target.id);
         });
-
-
         document.getElementsByClassName("inl-number")[i].onclick = function (param) {
             showFormItem("number", param.target.id);
+        }
+    }
+
+
+    // Init all the text inputs
+    for (let i=0; i< document.getElementsByClassName("inl-text").length ; i++) {
+
+        document.getElementsByClassName("inl-text")[i].addEventListener("click", (event) => {
+            event.preventDefault();
+            showFormItem("text", event.target.id);
+        });
+        document.getElementsByClassName("inl-text")[i].onclick = function (param) {
+            showFormItem("text", param.target.id);
         }
     }
 }
@@ -38,14 +54,48 @@ function showNumberFormItem(id) {
     tempInput.id = id + "-update";
     tempInput.autofocus = true;
     tempInput.value = document.getElementById(id).innerHTML;
+    let tempLabel = document.createElement("label");
+    tempLabel.innerText = document.getElementById(id).title;
+
+    // breakpoint
+    if (window.innerWidth > 768) {
+        document.getElementById("inl-popup-content").style.top = mousePos.y +"px";
+        document.getElementById("inl-popup-content").style.left = mousePos.x +"px";
+    }
+
     document.getElementById("inl-popup-content").innerHTML = "";
     document.getElementById("inl-popup-content").appendChild(tempInput); //innerHTML = document.getElementById(id).innerHTML;
+    document.getElementById("inl-popup-content").appendChild(tempLabel);
 
     console.log("focus", tempInput.id);
     delayedFocus(tempInput.id).then();
     console.log("showNumberFormItem", id)}
 function showSelectFormItem(id) {console.log("showSelectFormItem", id)}
-function showTextFormItem(id) {console.log("showTextFormItem", id)}
+function showTextFormItem(id) {
+    let tempInput = document.createElement("input");
+    tempInput.type = "text";
+    tempInput.id = id + "-update";
+    tempInput.autofocus = true;
+    tempInput.value = document.getElementById(id).innerHTML;
+    let tempLabel = document.createElement("label");
+    tempLabel.innerText = document.getElementById(id).title;
+
+    // breakpoint
+    if (window.innerWidth > 768) {
+        document.getElementById("inl-popup-content").style.top = mousePos.y +"px";
+        document.getElementById("inl-popup-content").style.left = mousePos.x +"px";
+    }
+
+    document.getElementById("inl-popup-content").innerHTML = "";
+    document.getElementById("inl-popup-content").appendChild(tempInput); //innerHTML = document.getElementById(id).innerHTML;
+    document.getElementById("inl-popup-content").appendChild(tempLabel);
+
+    console.log("focus", tempInput.id);
+    delayedFocus(tempInput.id).then();
+    console.log("showTextFormItem", id)
+}
+
+
 
 /* hide the popup */
 function hideFormItem() {
@@ -59,12 +109,15 @@ function hideFormItem() {
 }
 function hideNumberFormItem(id) {
     // Visible text takes the input value
-    document.getElementById(currentFormItem).innerText = document.getElementById(currentFormItem + "-update").value;
-   console.log("hideNumberFormItem",currentFormItem.substring(4))
-    document.getElementById(currentFormItem.substring(4)).value = document.getElementById(currentFormItem + "-update").value;
+    document.getElementById(id).innerText = document.getElementById(id + "-update").value;
+    document.getElementById(id.substring(4)).value = document.getElementById(id + "-update").value;
     console.log("hideNumberFormItem", id)}
 function hideSelectFormItem(id) {console.log("hideSelectFormItem", id)}
-function hideTextFormItem(id) {console.log("hideTextFormItem", id)}
+function hideTextFormItem(id) {
+    // Visible text takes the input value
+    document.getElementById(id).innerText = document.getElementById(id + "-update").value;
+    document.getElementById(id.substring(4)).value = document.getElementById(id + "-update").value;
+}
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const delayedFocus = async (itemId, timer = 250) => {
