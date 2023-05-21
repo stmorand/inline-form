@@ -9,7 +9,7 @@ window.addEventListener('mousemove', (event) => {
 
 /* load the tools included in selects.json */
 function loadSelectsJSON(callback) {
-    var xobj = new XMLHttpRequest();
+    let xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'selects.json', true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function () {
@@ -97,8 +97,7 @@ function showSelectFormItem(id) {
 
     for (let i=0; i< selects[id.substring(4)].length;i++) {
         let tempLi = document.createElement("li");
-        let tempHTML = "<li><a onclick=\"hideSelectFormItem(\'" + id + "\', \'" + selects[id.substring(4)][i]["text-"+ language] + "\',\'" + selects[id.substring(4)][i]["name"] + "\')\">"+ selects[id.substring(4)][i]["text-"+ language] +"</a></li>";
-        tempLi.innerHTML = tempHTML;
+        tempLi.innerHTML = "<li><a onclick=\"hideSelectFormItem(\'" + id + "\', \'" + selects[id.substring(4)][i]["text-" + language] + "\',\'" + selects[id.substring(4)][i]["name"] + "\')\">" + selects[id.substring(4)][i]["text-" + language] + "</a></li>";
         tempList.appendChild(tempLi);
     }
     let tempLabel = document.createElement("label");
