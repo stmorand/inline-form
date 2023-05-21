@@ -72,9 +72,13 @@ body {
   width: calc(100% - 80px);
 }
 .overlay__content label {
+  background-color: var(--main-color-a-8);
+  color: var(--main-color-a-1);
+  font-size: 12px;
   display: block;
   text-align: center;
   padding-bottom: 4px;
+  padding-top: 4px;
   width: 100%;
 }
 .overlay__content ul {
@@ -84,7 +88,7 @@ body {
   cursor: pointer;
   font-weight: lighter;
   display: block;
-  padding: 4px;
+  padding: 10px;
   width: 100%;
 }
 .overlay__content ul li a:hover {
