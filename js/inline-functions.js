@@ -8,7 +8,7 @@ window.addEventListener('mousemove', (event) => {
 });
 
 /* load the tools included in selects.json */
-function loadToolsJSON(callback) {
+function loadSelectsJSON(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'selects.json', true); // Replace 'my_data' with the path to your file
@@ -22,7 +22,7 @@ function loadToolsJSON(callback) {
 }
 
 function initInlineForm() {
-    loadToolsJSON(function(response) {
+    loadSelectsJSON(function(response) {
         // Parse JSON string into object
         selects = JSON.parse(response);
     });
@@ -90,11 +90,8 @@ function showNumberFormItem(id) {
     document.getElementById("inl-popup-content").appendChild(tempInput); //innerHTML = document.getElementById(id).innerHTML;
     document.getElementById("inl-popup-content").appendChild(tempLabel);
 
-    console.log("focus", tempInput.id);
-    delayedFocus(tempInput.id).then();
-    console.log("showNumberFormItem", id)}
+    delayedFocus(tempInput.id).then();}
 function showSelectFormItem(id) {
-    console.log("showSelectFormItem", id)
 
     let tempList = document.createElement("ul");
 
@@ -137,9 +134,7 @@ function showTextFormItem(id) {
     document.getElementById("inl-popup-content").appendChild(tempInput); //innerHTML = document.getElementById(id).innerHTML;
     document.getElementById("inl-popup-content").appendChild(tempLabel);
 
-    console.log("focus", tempInput.id);
     delayedFocus(tempInput.id).then();
-    console.log("showTextFormItem", id)
 }
 
 
@@ -158,12 +153,11 @@ function hideNumberFormItem(id) {
     // Visible text takes the input value
     document.getElementById(id).innerText = document.getElementById(id + "-update").value;
     document.getElementById(id.substring(4)).value = document.getElementById(id + "-update").value;
-    console.log("hideNumberFormItem", id)}
+}
 function hideSelectFormItem(id, longvalue, value) {
-    console.log("hideSelectFormItem", id, longvalue, value);
-    document.getElementById(id).innerText = longvalue;
-    document.getElementById(id.substring(4)).value = value;
-    document.getElementById(id.substring(4) + "-text").value = longvalue;
+    document.getElementById(id).innerText = longvalue !== undefined ? longvalue : "";
+    document.getElementById(id.substring(4)).value = value !== undefined ? value : "";
+    document.getElementById(id.substring(4) + "-text").value = longvalue !== undefined ? value : "";
     document.getElementById("inl-popup").classList.remove("show");}
 function hideTextFormItem(id) {
     // Visible text takes the input value
