@@ -24,14 +24,16 @@ body {
 .inl-select {
   border-bottom : 3px solid var(--main-color-a-5);
   color: var(--main-color-a-1);
-  display: inline-block;
   height: 28px;
   cursor:pointer;
   min-width: 40px;
   padding: 2px;
   text-align: center;
-
 }
+.inl-number:empty,
+.inl-text:empty,
+.inl-select:empty {
+  display: inline-block;}
 
 
 .overlay{
