@@ -20,6 +20,7 @@ body {
 }
 
 .inl-number,
+.inl-number-abs,
 .inl-text,
 .inl-select {
   border-bottom : 3px solid var(--main-color-a-5);
@@ -31,6 +32,7 @@ body {
   text-align: center;
 }
 .inl-number:empty,
+.inl-number-abs:empty,
 .inl-text:empty,
 .inl-select:empty {
   display: inline-block;}

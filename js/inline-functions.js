@@ -27,8 +27,6 @@ function initInlineForm() {
         selects = JSON.parse(response);
     });
 
-
-
     // Init all the number inputs
     for (let i=0; i< document.getElementsByClassName("inl-number").length ; i++) {
         document.getElementsByClassName("inl-number")[i].addEventListener("click", (event) => {
@@ -37,6 +35,13 @@ function initInlineForm() {
         });
     }
 
+    // Init all the number inputs that must remain positive
+    for (let i=0; i< document.getElementsByClassName("inl-number-abs").length ; i++) {
+        document.getElementsByClassName("inl-number-abs")[i].addEventListener("click", (event) => {
+            event.preventDefault();
+            showFormItem("number-abs", event.target.id);
+        });
+    }
 
     // Init all the text inputs
     for (let i=0; i< document.getElementsByClassName("inl-text").length ; i++) {
@@ -64,17 +69,19 @@ function showFormItem(itemType,id) {
     document.getElementById("inl-popup").classList.add("show");
 
     switch (itemType) {
-        case "number":showNumberFormItem(id);break;
+        case "number":showNumberFormItem(id, false);break;
+        case "number-abs":showNumberFormItem(id);break;
         case "select":showSelectFormItem(id);break;
         case "text":
         default:showTextFormItem(id);break;
     }
 }
 
-function showNumberFormItem(id) {
+function showNumberFormItem(id, absolute = true) {
     let tempInput = document.createElement("input");
     tempInput.type = "number";
     tempInput.id = id + "-update";
+    if (absolute) tempInput.min = '0';
     tempInput.autofocus = true;
     tempInput.value = document.getElementById(id).innerHTML;
     let tempLabel = document.createElement("label");
