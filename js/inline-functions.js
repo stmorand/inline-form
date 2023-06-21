@@ -2,7 +2,9 @@ let currentFormItem = "";
 let currentFormType = "";
 let mousePos;
 let selects;
-let language = "fr"
+let language = "fr";
+let followType = "mouse"; //the popup can be display at mouse or input position
+let backgroundBlur = true;
 window.addEventListener('mousemove', (event) => {
     mousePos = { x: event.clientX, y: event.clientY };
 });
@@ -87,10 +89,27 @@ function showNumberFormItem(id, absolute = true) {
     let tempLabel = document.createElement("label");
     tempLabel.innerText = document.getElementById(id).title;
 
+    if (backgroundBlur) {
+        document.getElementById("inl-popup").classList.add("bg-blur");
+    }
+    else {
+        document.getElementById("inl-popup").classList.remove("bg-blur");
+    }
+
     // breakpoint
     if (window.innerWidth > 768) {
-        document.getElementById("inl-popup-content").style.top = mousePos.y +"px";
-        document.getElementById("inl-popup-content").style.left = mousePos.x +"px";
+        if (followType === "mouse") {
+            document.getElementById("inl-popup").classList.remove("follow-input-overlay");
+            document.getElementById("inl-popup-content").style.top = mousePos.y + "px";
+            document.getElementById("inl-popup-content").style.left = mousePos.x + "px";
+        }
+        //followtype = input
+        else {
+            document.getElementById("inl-popup").classList.add("follow-input-overlay");
+            let inputPos = document.getElementById(id).getBoundingClientRect();
+            document.getElementById("inl-popup-content").style.top = inputPos.bottom + "px";
+            document.getElementById("inl-popup-content").style.left = inputPos.x + "px";
+        }
     }
 
     document.getElementById("inl-popup-content").innerHTML = "";
@@ -99,7 +118,10 @@ function showNumberFormItem(id, absolute = true) {
 
     delayedFocus(tempInput.id).then();}
 function showSelectFormItem(id) {
-
+    console.log('showSelectFormItem',
+        document.getElementById(id).getBoundingClientRect().x,
+        document.getElementById(id).getBoundingClientRect().y,
+        id);
     let tempList = document.createElement("ul");
 
     for (let i=0; i< selects[id.substring(4)].length;i++) {
@@ -111,10 +133,27 @@ function showSelectFormItem(id) {
     tempLabel.innerText = document.getElementById(id).title;
 
 
+    if (backgroundBlur) {
+        document.getElementById("inl-popup").classList.add("bg-blur");
+    }
+    else {
+        document.getElementById("inl-popup").classList.remove("bg-blur");
+    }
+
     // breakpoint
     if (window.innerWidth > 768) {
-        document.getElementById("inl-popup-content").style.top = mousePos.y +"px";
-        document.getElementById("inl-popup-content").style.left = mousePos.x +"px";
+        if (followType === "mouse") {
+            document.getElementById("inl-popup").classList.remove("follow-input-overlay");
+            document.getElementById("inl-popup-content").style.top = mousePos.y + "px";
+            document.getElementById("inl-popup-content").style.left = mousePos.x + "px";
+        }
+        //followtype = input
+        else {
+            document.getElementById("inl-popup").classList.add("follow-input-overlay");
+            let inputPos = document.getElementById(id).getBoundingClientRect();
+            document.getElementById("inl-popup-content").style.top = inputPos.bottom + "px";
+            document.getElementById("inl-popup-content").style.left = inputPos.x + "px";
+        }
     }
 
     document.getElementById("inl-popup-content").innerHTML = "";
@@ -130,10 +169,27 @@ function showTextFormItem(id) {
     let tempLabel = document.createElement("label");
     tempLabel.innerText = document.getElementById(id).title;
 
+    if (backgroundBlur) {
+        document.getElementById("inl-popup").classList.add("bg-blur");
+    }
+    else {
+        document.getElementById("inl-popup").classList.remove("bg-blur");
+    }
+
     // breakpoint
     if (window.innerWidth > 768) {
-        document.getElementById("inl-popup-content").style.top = mousePos.y +"px";
-        document.getElementById("inl-popup-content").style.left = mousePos.x +"px";
+        if (followType === "mouse") {
+            document.getElementById("inl-popup").classList.remove("follow-input-overlay");
+            document.getElementById("inl-popup-content").style.top = mousePos.y + "px";
+            document.getElementById("inl-popup-content").style.left = mousePos.x + "px";
+        }
+        //followtype = input
+        else {
+            document.getElementById("inl-popup").classList.add("follow-input-overlay");
+            let inputPos = document.getElementById(id).getBoundingClientRect();
+            document.getElementById("inl-popup-content").style.top = inputPos.bottom + "px";
+            document.getElementById("inl-popup-content").style.left = inputPos.x + "px";
+        }
     }
 
     document.getElementById("inl-popup-content").innerHTML = "";
