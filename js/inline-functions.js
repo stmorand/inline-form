@@ -3,7 +3,7 @@ let currentFormType = "";
 let mousePos;
 let selects;
 let language = "fr";
-let followType = "mouse"; //the popup can be display at mouse or input position
+let followType = "input"; //the popup can be display at mouse or input position
 let backgroundBlur = true;
 window.addEventListener('mousemove', (event) => {
     mousePos = { x: event.clientX, y: event.clientY };
@@ -61,6 +61,14 @@ function initInlineForm() {
             showFormItem("select", event.target.id);
         });
     }
+
+    // Init all the multiselect inputs
+    for (let i=0; i< document.getElementsByClassName("inl-multiselect").length ; i++) {
+        document.getElementsByClassName("inl-multiselect")[i].addEventListener("click", (event) => {
+            event.preventDefault();
+            showFormItem("multiselect", event.target.id);
+        });
+    }
 }
 
 function showFormItem(itemType,id) {
@@ -74,6 +82,7 @@ function showFormItem(itemType,id) {
         case "number":showNumberFormItem(id, false);break;
         case "number-abs":showNumberFormItem(id);break;
         case "select":showSelectFormItem(id);break;
+        case "multiselect":showMultiselectFormItem(id);break;
         case "text":
         default:showTextFormItem(id);break;
     }
@@ -160,6 +169,52 @@ function showSelectFormItem(id) {
     document.getElementById("inl-popup-content").appendChild(tempList); //innerHTML = document.getElementById(id).innerHTML;
     document.getElementById("inl-popup-content").appendChild(tempLabel);
 }
+
+function showMultiselectFormItem(id) {
+    console.log('showMultiselectFormItem',
+        document.getElementById(id).getBoundingClientRect().x,
+        document.getElementById(id).getBoundingClientRect().y,
+        id);
+    let tempList = document.createElement("ul");
+
+    for (let i=0; i< selects[id.substring(4)].length;i++) {
+        let tempLi = document.createElement("li");
+        tempLi.innerHTML = "<li><a "+ (isInMultiselect(id, selects[id.substring(4)][i]["text-" + language],selects[id.substring(4)][i]["name"])? "class='multiselected'" :"") +" id=\"" + id.substring(4) + "-" + selects[id.substring(4)][i]["name"].replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '-') +"\" onclick=\"toggleMultiselectFormItem(\'" + id + "\', \'" + selects[id.substring(4)][i]["text-" + language] + "\',\'" + selects[id.substring(4)][i]["name"] + "\')\">" + selects[id.substring(4)][i]["text-" + language] + "</a></li>";
+        tempList.appendChild(tempLi);
+    }
+    let tempLabel = document.createElement("label");
+    tempLabel.innerText = document.getElementById(id).title;
+
+
+    if (backgroundBlur) {
+        document.getElementById("inl-popup").classList.add("bg-blur");
+    }
+    else {
+        document.getElementById("inl-popup").classList.remove("bg-blur");
+    }
+
+    // breakpoint
+    if (window.innerWidth > 768) {
+        if (followType === "mouse") {
+            document.getElementById("inl-popup").classList.remove("follow-input-overlay");
+            document.getElementById("inl-popup-content").style.top = mousePos.y + "px";
+            document.getElementById("inl-popup-content").style.left = mousePos.x + "px";
+        }
+        //followtype = input
+        else {
+            document.getElementById("inl-popup").classList.add("follow-input-overlay");
+            let inputPos = document.getElementById(id).getBoundingClientRect();
+            document.getElementById("inl-popup-content").style.top = inputPos.bottom + "px";
+            document.getElementById("inl-popup-content").style.left = inputPos.x + "px";
+        }
+    }
+
+    document.getElementById("inl-popup-content").innerHTML = "";
+    document.getElementById("inl-popup-content").appendChild(tempList); //innerHTML = document.getElementById(id).innerHTML;
+    document.getElementById("inl-popup-content").appendChild(tempLabel);
+}
+
+
 function showTextFormItem(id) {
     let tempInput = document.createElement("input");
     tempInput.type = "text";
@@ -206,6 +261,7 @@ function hideFormItem() {
     switch (currentFormType) {
         case "number":hideNumberFormItem(currentFormItem);break;
         case "select":hideSelectFormItem(currentFormItem);break;
+        case "multiselect":hideMultiselectFormItem(currentFormItem);break;
         case "text":
         default:hideTextFormItem(currentFormItem);break;
     }
@@ -221,6 +277,92 @@ function hideSelectFormItem(id, longvalue, value) {
     document.getElementById(id.substring(4)).value = value !== undefined ? value : "";
     document.getElementById(id.substring(4) + "-text").value = longvalue !== undefined ? value : "";
     document.getElementById("inl-popup").classList.remove("show");}
+
+function hideMultiselectFormItem(id, longvalue, value) {
+    console.log("hideMultiselectFormItem", id);
+    let displayText = document.getElementById(id.substring(4)).value;
+    document.getElementById(id).innerText = displayText !== undefined ? displayText.replaceAll("::", ", ") : "";
+    /*document.getElementById(id.substring(4)).value = value !== undefined ? value : "";
+    document.getElementById(id.substring(4) + "-text").value = longvalue.replace("::", ", ") !== undefined ? longvalue.replace("::", ", ") : "";
+   */ document.getElementById("inl-popup").classList.remove("show");}
+
+// select or unselect an element from a multiselect
+function toggleMultiselectFormItem(id,longvalue,value) {
+
+    console.log("toggleMultiselect", id, longvalue, value);
+    console.log(document.getElementById(id.substring(4)).value);
+
+    if (isInMultiselect(id,longvalue,value)) {
+        console.log("toggleMultiselect", ">> remove");
+        removeFromMultiselect(id, longvalue, value);
+    }
+    else {
+        console.log("toggleMultiselect", ">> add");
+        addToMultiselect(id, longvalue, value);
+    }
+}
+
+function isInMultiselect(id, longvalue, value) {
+    if ((document.getElementById(id.substring(4)).value !== undefined)
+        && (document.getElementById(id.substring(4)).value !== "")) {
+
+        let tempString = document.getElementById(id.substring(4)).value;
+        let tempArray = tempString.split("::");
+
+        for (let i=0; i < tempArray.length; i++) {
+            if (tempArray[i] === value) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    else {
+        return false;
+    }
+}
+function addToMultiselect(id, longvalue, value) {
+    if ((document.getElementById(id.substring(4)).value !== undefined)
+        && (document.getElementById(id.substring(4)).value !== "")
+        ){
+        document.getElementById(id.substring(4)).value += value !== undefined ? "::" + value : "";
+        document.getElementById(id.substring(4) + "-text").value += longvalue !== undefined ? "::" + longvalue : "";
+    }
+    else {
+        document.getElementById(id.substring(4)).value = value !== undefined ? value : "";
+        document.getElementById(id.substring(4) + "-text").value = longvalue !== undefined ? longvalue : "";
+    }
+
+    console.log( "addToMultiselect",
+        id.substring(4) + "-" + value.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '-'));
+    document.getElementById(id.substring(4) + "-" +  value.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '-')).classList.add('multiselected');
+}
+
+function removeFromMultiselect(id, longvalue, value) {
+    if ((document.getElementById(id.substring(4)).value !== undefined)
+        && (document.getElementById(id.substring(4)).value !== "")
+    ){
+        let tempString = document.getElementById(id.substring(4)).value;
+        let tempArray = tempString.split("::");
+
+        let tempStringText = document.getElementById(id.substring(4)+"-text").value;
+
+        let tempArrayText = tempStringText.split("::");
+
+        for (let i=0; i < tempArray.length; i++) {
+            if (tempArray[i] === value) {
+                tempArray.splice(i,1);
+                tempArrayText.splice(i,1);
+            }
+        }
+        document.getElementById(id.substring(4)).value = tempArray.length > 1 ? tempArray.join('::') : tempArray[0] !== undefined ? tempArray[0]:"";
+        document.getElementById(id.substring(4)+"-text").value = tempArrayText.length > 1 ? tempArrayText.join('::') : tempArrayText[0] !== undefined ? tempArrayText[0]:"";
+    }
+
+    document.getElementById(id.substring(4) + "-" + value.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '-')).classList.remove('multiselected');
+    console.log("removedFromMultiselect", document.getElementById(id.substring(4)).value);
+}
+
 function hideTextFormItem(id) {
     // Visible text takes the input value
     document.getElementById(id).innerText = document.getElementById(id + "-update").value;
