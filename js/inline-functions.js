@@ -177,6 +177,7 @@ function showMultiselectFormItem(id) {
         id);
     let tempList = document.createElement("ul");
 
+    console.log(selects);
     for (let i=0; i< selects[id.substring(4)].length;i++) {
         let tempLi = document.createElement("li");
         tempLi.innerHTML = "<li><a "+ (isInMultiselect(id, selects[id.substring(4)][i]["text-" + language],selects[id.substring(4)][i]["name"])? "class='multiselected'" :"") +" id=\"" + id.substring(4) + "-" + selects[id.substring(4)][i]["name"].replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '-') +"\" onclick=\"toggleMultiselectFormItem(\'" + id + "\', \'" + selects[id.substring(4)][i]["text-" + language] + "\',\'" + selects[id.substring(4)][i]["name"] + "\')\">" + selects[id.substring(4)][i]["text-" + language] + "</a></li>";
@@ -280,7 +281,7 @@ function hideSelectFormItem(id, longvalue, value) {
 
 function hideMultiselectFormItem(id, longvalue, value) {
     console.log("hideMultiselectFormItem", id);
-    let displayText = document.getElementById(id.substring(4)).value;
+    let displayText = document.getElementById(id.substring(4) + "-text").value;
     document.getElementById(id).innerText = displayText !== undefined ? displayText.replaceAll("::", ", ") : "";
     /*document.getElementById(id.substring(4)).value = value !== undefined ? value : "";
     document.getElementById(id.substring(4) + "-text").value = longvalue.replace("::", ", ") !== undefined ? longvalue.replace("::", ", ") : "";

@@ -2,17 +2,17 @@
   "aselect" : [
     {
       "name": "choix 1",
-      "text-fr": "ceci est le choix un",
+      "text-fr": "choisir cette option",
       "text-en": "this is the first choice"
     },
     {
       "name": "choix 2",
-      "text-fr": "ceci est le choix 2",
+      "text-fr": "ou cette option",
       "text-en": "this is the second choice"
     },
     {
       "name": "choix 3",
-      "text-fr": "ceci est le choix 3",
+      "text-fr": "ou bien celle-ci",
       "text-en": "this is the third choice"
     }
   ],
@@ -30,18 +30,18 @@
 
   "amultiselect" : [
     {
-      "name": "choix multi 1",
-      "text-fr": "ceci est le choix un",
+      "name": "choix 1",
+      "text-fr": "choisir cette option",
       "text-en": "this is the first choice"
     },
     {
-      "name": "choix multi 2",
-      "text-fr": "ceci est le choix 2",
+      "name": "choix 2",
+      "text-fr": "et / ou cette option",
       "text-en": "this is the second choice"
     },
     {
-      "name": "choix multi 3",
-      "text-fr": "ceci est le choix 3",
+      "name": "choix 3",
+      "text-fr": "et/ou aussi celle-ci :-)",
       "text-en": "this is the third choice"
     }
   ]
