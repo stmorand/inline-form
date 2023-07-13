@@ -11,13 +11,13 @@
 body {
   background-color: white;
   font-size: 18px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 400;
 }
 .overlay__content ul li a.multiselected {
   background-color: var(--main-color-a-6);
   color: var(--main-color-a-5);
-  font-weight: 500;
+  font-weight: 700;
 }
 .multiselected:before {
   content: "> ";
@@ -26,6 +26,8 @@ body {
   padding: 20px;
   font-size: 1.2rem;
   line-height: 1.6rem;
+  background-color: #F8f8f8;
+  border-radius: 20px;
 }
 
 .inl-number,
@@ -35,7 +37,7 @@ body {
 .inl-multiselect{
   border-bottom : 1px solid var(--main-color-a-1);
   color: var(--main-color-a-1);
-  font-weight:500;
+  font-weight:700;
   height: 18px;
   cursor:pointer;
   min-width: 40px;
@@ -116,9 +118,12 @@ body {
 .overlay__content ul {
   padding: 0;
 }
+.overlay__content ul li {
+  margin-bottom: 0;
+}
 .overlay__content ul li a {
+  color: var(--main-color-a-5);
   cursor: pointer;
-  font-weight: 400;
   display: block;
   padding:10px;
   width: 100%;
